@@ -31,11 +31,10 @@ path=${path%/}
 # Install dependencies
 sudo apt-get install -y openjdk-7-jre tomcat7
 
-
+wget "http://download.sonatype.com/nexus/oss/nexus-2.10.0-02.war" -p /var/lib/tomcat7/webapps/nexus.war
 
 # Copy files to the right place
 sudo service tomcat7 stop
-sudo cp ../sources/nexus.war /var/lib/tomcat7/webapps/
 sudo chown -R tomcat7:tomcat7 /var/lib/tomcat7/webapps/
 
 
