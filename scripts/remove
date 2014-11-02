@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+sudo yunohost service remove nexus
+domain=$(sudo yunohost app setting nexus domain)
+
+sudo rm /etc/nginx/conf.d/$domain.d/nexus.conf
+
+sudo service tomcat7 stop
+sudo rm /var/lib/tomcat7/webapps/nexus.war
+sudo rm -r /var/nexus/
+sudo service tomcat7 start
+
+sudo service nginx reload
+sudo yunohost app ssowatconf 

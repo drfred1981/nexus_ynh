@@ -1,0 +1,40 @@
+{
+    "name": "nexus",
+    "id": "nexus",
+    "description": {
+        "en": "nexus is an open source, repository manager",
+        "fr": "Nexus est un gestionnaire de dépôts open source développé par Sonatype"
+    },
+    "developer": {
+        "name": "drfred1981",
+        "email": "",
+        "url": "http://www.sonatype.com/products.html"
+    },
+    "multi_instance": "true",
+    "arguments": {
+        "install" : [
+            {
+                "name": "domain",
+                "ask": {
+                    "en": "Choose a domain for nexus"
+                },
+                "example": "domain.org"
+            },
+            {
+                "name": "path",
+                "ask": {
+                    "en": "Choose a path for nexus"
+                },
+                "example": "/nexus",
+                "default": "/nexus"
+            },
+            {
+                "name": "admin",
+                "ask": {
+                    "en": "Choose the nexus administrator (must be an existing YunoHost user)"
+                },
+                "example": "homer"
+            }
+        ]
+    }
+}
