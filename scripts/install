@@ -5,6 +5,8 @@ domain=$1
 path=$2
 user=$3
 
+version=2.10.0-02
+
 # Check user parameter
 sudo yunohost user list --json | grep -q "\"username\": \"$user\""
 if [[ ! $? -eq 0 ]]; then
@@ -29,35 +31,37 @@ YNH_MAIL=$(sudo yunohost user info $user | grep "mail: " | sed s/'mail: '/''/g)
 path=${path%/}
 
 # Install dependencies
-sudo apt-get install -y openjdk-7-jre tomcat7
-
-wget "http://download.sonatype.com/nexus/oss/nexus-2.10.0-02.war"
-mv nexus-2.10.0-02.war /var/lib/tomcat7/webapps/nexus.war
+sudo apt-get install -y openjdk-7-jre openjdk-7-jdk tomcat7
 
 # Copy files to the right place
-sudo service tomcat7 stop
-sudo chown -R tomcat7:tomcat7 /var/lib/tomcat7/webapps/
 
+wget -P /tmp "http://download.sonatype.com/nexus/oss/nexus-latest-bundle.zip"
+sudo adduser --home /opt/nexus --disabled-login --disabled-password nexus
 
+unzip -d /opt/nexus /tmp/nexus-latest-bundle.zip
+sudo ln -s /opt/nexus/nexus-$version/bin/nexus /etc/init.d/nexus
 
 
 sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
+
+
+sed -i "s@NEXUS_HOME=\"\"@NEXUS_HOME=\"/opt/nexus/nexus-$version\"@g" ../conf/nginx.conf
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/nexus.conf
 
 
 
-sudo addgroup $user tomcat7
-sudo addgroup tomcat7 $user
+sudo addgroup nexus $user
+sudo update-rc.d nexus defaults
 
 
 data_path=/home/yunohost.app/nexus
 sudo mkdir -p $data_path
-sudo chown -hR tomcat7:tomcat7 $data_path
+sudo chown -hR nexus:nexus $data_path
 sudo chmod 775 $data_path
 
 # Monitor service
-sudo service tomcat7 start
-sudo yunohost service add tomcat7
+sudo service nexus start
+sudo yunohost service add nexus
 
 
 
