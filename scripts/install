@@ -42,21 +42,23 @@ sudo unzip -d /opt/nexus /tmp/nexus-latest-bundle.zip
 sudo ln -s /opt/nexus/nexus-$version/bin/nexus /etc/init.d/nexus
 sudo chown -hR nexus:nexus /opt/nexus/
 
-sudo service nexus start
+
 wget http://localhost:8081/nexus
 sudo update-rc.d nexus defaults
 sudo sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 
-ADD='RUN_AS_USER=nexus'
-sudo sed -i "s@NEXUS_HOME=\"..\"@NEXUS_HOME=\"/opt/nexus/nexus-$version\"@g" /opt/nexus/nexus-$version/bin/nexus
+ADD="
+NEXUS_HOME=\"/opt/nexus/nexus-$version\"
+RUN_AS_USER=nexus"
+sudo sed -i "s@NEXUS_HOME=\"..\"@$ADD@g" /opt/nexus/nexus-$version/bin/nexus
 
-sudo sh -c "echo '$ADD' >> /opt/nexus/nexus-$version/bin/nexus"
 
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/nexus.conf
-
+sudo service nexus start
+sleep 60
 sudo service nexus stop
-sudo cp ../conf/ldap.xml /opt/nexus/sonatype-work/nexus/conf
-sudo cp ../conf/security-configuration.xml /opt/nexus/sonatype-work/nexus/conf
+sudo cp ../conf/ldap.xml /opt/nexus/sonatype-work/nexus/conf/
+sudo cp ../conf/security-configuration.xml /opt/nexus/sonatype-work/nexus/conf/
 sudo chown -hR nexus:nexus /opt/nexus/
 sudo addgroup nexus $user
 
@@ -70,9 +72,6 @@ sudo chmod 775 $data_path
 # Monitor service
 
 sudo yunohost service add nexus
-
-
-
 
 # Reload Nginx and regenerate SSOwat conf
 
