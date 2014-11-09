@@ -43,12 +43,15 @@ sudo ln -s /opt/nexus/nexus-$version/bin/nexus /etc/init.d/nexus
 sudo chown -hR nexus:nexus /opt/nexus/
 
 sudo service nexus start
-
+wget http://localhost:8081/nexus
 sudo update-rc.d nexus defaults
 sudo sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 
+ADD='RUN_AS_USER=nexus'
+sudo sed -i "s@NEXUS_HOME=\"..\"@NEXUS_HOME=\"/opt/nexus/nexus-$version\"@g" /opt/nexus/nexus-$version/bin/nexus
 
-sudo sed -i "s@NEXUS_HOME=\"\"@NEXUS_HOME=\"/opt/nexus/nexus-$version\"@g" ../conf/nginx.conf
+sudo sh -c "echo '$ADD' >> /opt/nexus/nexus-$version/bin/nexus"
+
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/nexus.conf
 
 sudo service nexus stop
