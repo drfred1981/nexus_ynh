@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ldapConfiguration>
+  <version>2.8.0</version>
+  <connectionInfo>
+    <searchBase>ou=users,dc=yunohost,dc=org</searchBase>
+    <authScheme>none</authScheme>
+    <protocol>ldap</protocol>
+    <host>localhost</host>
+    <port>389</port>
+  </connectionInfo>
+  <userAndGroupConfig>
+    <emailAddressAttribute>mail</emailAddressAttribute>
+    <groupBaseDn>ou=groups</groupBaseDn>
+    <groupIdAttribute>cn</groupIdAttribute>
+    <groupMemberAttribute>uniqueMember</groupMemberAttribute>
+    <groupMemberFormat>${username}</groupMemberFormat>
+    <groupObjectClass>groupOfUniqueNames</groupObjectClass>
+    <userIdAttribute>uid</userIdAttribute>
+    <userObjectClass>mailAccount</userObjectClass>
+    <userRealNameAttribute>cn</userRealNameAttribute>
+    <ldapFilter>(objectclass=mailAccount)</ldapFilter>
+  </userAndGroupConfig>
+</ldapConfiguration>
