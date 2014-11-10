@@ -42,7 +42,7 @@ sudo unzip -d /opt/nexus /tmp/nexus-latest-bundle.zip
 sudo cp ../conf/nexus /opt/nexus/nexus-$version/bin/nexus
 sudo sed -i "s@YNH_VERSION@$version@g" /opt/nexus/nexus-$version/bin/nexus
 sudo ln -s /opt/nexus/nexus-$version/bin/nexus /etc/init.d/nexus
-sudo chown -hR nexus:nexus /opt/nexus/
+sudo chown -hR nexus /opt/nexus/
 
 
 sudo update-rc.d nexus defaults
@@ -70,14 +70,14 @@ sudo sed -i "sYNH_EMAIL@$YNH_EMAIL@g" /opt/nexus/sonatype-work/nexus/conf/nexus.
 
 
 
-sudo chown -hR nexus:nexus /opt/nexus/
+sudo chown -hR nexus /opt/nexus/
 sudo addgroup nexus $user
 
 sudo service nexus start
 
 data_path=/home/yunohost.app/nexus
 sudo mkdir -p $data_path
-sudo chown -hR nexus:nexus $data_path
+sudo chown -hR nexus $data_path
 sudo chmod 775 $data_path
 
 # Monitor service
