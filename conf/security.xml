@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<security>
+  <version>2.0.5</version>
+  <users>
+    <user>
+      <id>YNH_USER</id>
+      <firstName>Administrator</firstName>
+      <lastName>YNH_USER</lastName>
+      <password>f865b53623b121fd34ee5426c792e5c33af8c227</password>
+      <status>active</status>
+      <email>YNH_EMAIL</email>
+    </user>
+    
+  </users>
+  <userRoleMappings>
+    <userRoleMapping>
+      <userId>YNH_USER</userId>
+      <source>default</source>
+      <roles>
+        <role>nx-admin</role>
+      </roles>
+    </userRoleMapping>
+  </userRoleMappings>
+</security>
