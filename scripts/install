@@ -36,9 +36,11 @@ sudo apt-get install -y openjdk-7-jre openjdk-7-jdk tomcat7
 # Copy files to the right place
 
 wget -P /tmp "http://download.sonatype.com/nexus/oss/nexus-latest-bundle.zip"
-sudo adduser --home /opt/nexus --disabled-login --disabled-password nexus
+sudo adduser --home /opt/nexus --disabled-login --disabled-password  --system nexus
 sudo mkdir /opt/nexus
 sudo unzip -d /opt/nexus /tmp/nexus-latest-bundle.zip
+sudo cp ../conf/nexus /opt/nexus/nexus-$version/bin/nexus
+sudo sed -i "s@YNH_VERSION@$version@g" /opt/nexus/nexus-$version/bin/nexus
 sudo ln -s /opt/nexus/nexus-$version/bin/nexus /etc/init.d/nexus
 sudo chown -hR nexus:nexus /opt/nexus/
 
@@ -47,18 +49,25 @@ wget http://localhost:8081/nexus
 sudo update-rc.d nexus defaults
 sudo sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 
-ADD="
-NEXUS_HOME=\"/opt/nexus/nexus-$version\"
-RUN_AS_USER=nexus"
-sudo sed -i "s@NEXUS_HOME=\"..\"@$ADD@g" /opt/nexus/nexus-$version/bin/nexus
 
 
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/nexus.conf
 sudo service nexus start
-sleep 60
+sleep 160
 sudo service nexus stop
-sudo cp ../conf/ldap.xml /opt/nexus/sonatype-work/nexus/conf/
+
 sudo cp ../conf/security-configuration.xml /opt/nexus/sonatype-work/nexus/conf/
+sudo cp ../conf/security.xml /opt/nexus/sonatype-work/nexus/conf/
+sudo cp ../conf/capabilities.xml /opt/nexus/sonatype-work/nexus/conf/
+sudo cp ../conf/nexus.xml /opt/nexus/sonatype-work/nexus/conf/
+
+sudo sed -i "sYNH_USER@$user@g" /opt/nexus/sonatype-work/nexus/conf/nexus.xml
+sudo sed -i "sYNH_USER@$user@g" /opt/nexus/sonatype-work/nexus/conf/security.xml
+sudo sed -i "sYNH_DOMAIN@$domain@g" /opt/nexus/sonatype-work/nexus/conf/nexus.xml
+sudo sed -i "sYNH_EMAIL@$YNH_EMAIL@g" /opt/nexus/sonatype-work/nexus/conf/nexus.xml
+
+
+
 sudo chown -hR nexus:nexus /opt/nexus/
 sudo addgroup nexus $user
 
