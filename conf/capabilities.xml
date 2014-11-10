@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<capabilitiesConfiguration>
+  <version>2.0.0</version>
+  <capabilities>
+    <capability>
+      <version>1</version>
+      <id>000a9d759819d835</id>
+      <notes>Automatically added on Sun Nov 09 21:29:59 CET 2014</notes>
+      <typeId>OutreachManagementCapability</typeId>
+      <properties>
+        <property>
+          <key>baseUrl</key>
+          <value>http://links.sonatype.com/products/nexus/outreach</value>
+        </property>
+      </properties>
+    </capability>
+    <capability>
+      <version>1</version>
+      <id>000a9d759819d836</id>
+      <notes>Automatically added on Sun Nov 09 21:29:59 CET 2014</notes>
+      <typeId>OutreachMarkerCapability</typeId>
+    </capability>
+    <capability>
+      <version>1</version>
+      <id>000a9d759819d837</id>
+      <notes>Automatically added on Sun Nov 09 21:29:59 CET 2014</notes>
+      <enabled>false</enabled>
+      <typeId>analytics.collection</typeId>
+      <properties>
+        <property>
+          <key>hostId</key>
+          <value>30b23ebe-9da7-49e2-ae5e-921603bf1b97</value>
+        </property>
+        <property>
+          <key>salt</key>
+          <value>6TUpQR+BhTPTzquVyldFlKWYSsc75Pq3EeOkVsLf9Zmr</value>
+        </property>
+      </properties>
+    </capability>
+    <capability>
+      <version>1</version>
+      <id>000a9d759819d838</id>
+      <notes>Automatically added on Sun Nov 09 21:30:00 CET 2014</notes>
+      <enabled>false</enabled>
+      <typeId>analytics.autosubmit</typeId>
+    </capability>
+    <capability>
+      <version>1</version>
+      <id>000a9d759819d839</id>
+      <notes>Automatically added on Sun Nov 09 21:30:00 CET 2014</notes>
+      <typeId>yum</typeId>
+      <properties>
+        <property>
+          <key>maxNumberParallelThreads</key>
+          <value>10</value>
+        </property>
+      </properties>
+    </capability>
+    <capability>
+      <version>1</version>
+      <id>000007d9fa8197ea</id>
+      <notes></notes>
+      <typeId>rutauth</typeId>
+      <properties>
+        <property>
+          <key>httpHeader</key>
+          <value>REMOTE_USER</value>
+        </property>
+      </properties>
+    </capability>
+
+  </capabilities>
+</capabilitiesConfiguration>
