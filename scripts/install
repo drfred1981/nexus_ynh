@@ -42,7 +42,7 @@ sudo unzip -d /opt/nexus /tmp/nexus-latest-bundle.zip
 sudo cp ../conf/nexus /opt/nexus/nexus-$version/bin/nexus
 sudo sed -i "s@YNH_VERSION@$version@g" /opt/nexus/nexus-$version/bin/nexus
 sudo ln -s /opt/nexus/nexus-$version/bin/nexus /etc/init.d/nexus
-sudo chown -hR nexus /opt/nexus/
+sudo chown -hR nexus:$user /opt/nexus/
 
 
 sudo update-rc.d nexus defaults
@@ -56,7 +56,7 @@ sleep 160
 wget http://localhost:8081/nexus
 sleep 160
 wget http://localhost:8081/nexus
-sudo service nexus stop
+sudo service nexus:$user stop
 
 sudo cp ../conf/security-configuration.xml /opt/nexus/sonatype-work/nexus/conf/
 sudo cp ../conf/security.xml /opt/nexus/sonatype-work/nexus/conf/
@@ -70,8 +70,8 @@ sudo sed -i "sYNH_EMAIL@$YNH_EMAIL@g" /opt/nexus/sonatype-work/nexus/conf/nexus.
 
 
 
-sudo chown -hR nexus /opt/nexus/
-sudo addgroup nexus $user
+sudo chown -hR nexus:$user /opt/nexus/
+
 
 sudo service nexus start
 
