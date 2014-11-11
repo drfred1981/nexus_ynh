@@ -43,7 +43,7 @@ sudo unzip -d /opt/nexus /tmp/nexus-latest-bundle.zip
 
 add='RUN_AS_USER=nexus\nNEXUS_HOME'
 
-sudo sed "s@NEXUS_HOME@$add@g" /opt/nexus/nexus-$version/bin/nexus
+sudo sed "s@NEXUS_HOME@$add@g" > /opt/nexus/nexus-$version/bin/nexus
 
 sudo ln -s /opt/nexus/nexus-$version/bin/nexus /etc/init.d/nexus
 sudo chown -hR nexus: /opt/nexus/
