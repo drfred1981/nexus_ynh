@@ -43,7 +43,7 @@ sudo cp ../conf/nexus /opt/nexus/nexus-$version/bin/nexus
 sudo sed -i "s@YNH_VERSION@$version@g" /opt/nexus/nexus-$version/bin/nexus
 sudo ln -s /opt/nexus/nexus-$version/bin/nexus /etc/init.d/nexus
 sudo chown -hR nexus: /opt/nexus/
-
+sudo chmod +x /opt/nexus/nexus-$version/bin/nexus
 
 sudo update-rc.d nexus defaults
 sudo sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
