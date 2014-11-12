@@ -41,8 +41,7 @@ sudo mkdir /opt/nexus
 sudo unzip -d /opt/nexus /tmp/nexus-latest-bundle.zip
 #sudo cp ../conf/nexus /opt/nexus/nexus-$version/bin/nexus
 
-add="RUN_AS_USER=nexus
-NEXUS_HOME=\"/opt/nexus/nexus-$version/\""
+add="\nRUN_AS_USER=nexus\nNEXUS_HOME=\"/opt/nexus/nexus-$version/\"\n"
 
 sudo sed -i "s@NEXUS_HOME=\"..\"@$add@g" /opt/nexus/nexus-$version/bin/nexus
 
