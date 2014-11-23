@@ -11,11 +11,14 @@
 # These settings can be modified to fit the needs of your application
 
 # Set this to the root of the Nexus installation
-NEXUS_HOME="/opt/nexus/nexus-YNH_VERSION"
+
 RUN_AS_USER=nexus
+NEXUS_HOME=/opt/nexus/nexus-2.10.0-02/
+
+
 # If specified, the Wrapper will be run as the specified user.
 
-# IMPORTANT - Make sure that the user has the required privileges to write into the Nexus installation directory.
+# IMPORTANT - Make sure that the user has the required privileges to write into                                                                                                                      the Nexus installation directory.
 
 # NOTE - This will set the user which is used to run the Wrapper as well as
 #  the JVM and is not useful in situations where a privileged resource or
@@ -104,7 +107,7 @@ then
     if [ ! -x "$PSEXE" ]
     then
         echo "Unable to locate 'ps'."
-        echo "Please report this message along with the location of the command on your system."
+        echo "Please report this message along with the location of the command                                                                                                                      on your system."
         exit 1
     fi
 fi
@@ -185,7 +188,7 @@ outputFile() {
     fi
 }
 
-# Test if NEXUS_HOME is relative (does not start with /). If relative it should be relative to this script location
+# Test if NEXUS_HOME is relative (does not start with /). If relative it should                                                                                                                      be relative to this script location
 FIRST_CHAR=`echo $NEXUS_HOME | cut -c1,1`
 if [ "$FIRST_CHAR" != "/" ]
 then
@@ -198,7 +201,7 @@ then
     PIDDIR="bin/jsw/$DIST_OS-$DIST_ARCH-$DIST_BITS"
 fi
 
-# If the PIDDIR is relative, set its value relative to the full NEXUS_HOME to avoid problems if
+# If the PIDDIR is relative, set its value relative to the full NEXUS_HOME to av                                                                                                                     oid problems if
 #  the working directory is later changed.
 FIRST_CHAR=`echo $PIDDIR | cut -c1,1`
 if [ "$FIRST_CHAR" != "/" ]
@@ -239,7 +242,7 @@ else
    IGNOREPROP=wrapper.ignore_signals=TRUE
 fi
 
-# Build the lock file clause.  Only create a lock file if the lock directory exists on this platform.
+# Build the lock file clause.  Only create a lock file if the lock directory exi                                                                                                                     sts on this platform.
 LOCKPROP=
 if [ -d $LOCKDIR ]
 then
@@ -261,26 +264,26 @@ checkUser() {
         if [ ! -x "$IDEXE" ]
         then
             echo "Unable to locate 'id'."
-            echo "Please report this message along with the location of the command on your system."
+            echo "Please report this message along with the location of the comm                                                                                                                     and on your system."
             exit 1
         fi
     fi
 
-    # Check the configured user.  If necessary rerun this script as the desired user.
+    # Check the configured user.  If necessary rerun this script as the desired                                                                                                                      user.
     if [ "X$RUN_AS_USER" != "X" ]
     then
         if [ "`$IDEXE -u -n`" != "$RUN_AS_USER" ]
         then
-            # If LOCKPROP and $RUN_AS_USER are defined then the new user will most likely not be
-            # able to create the lock file.  The Wrapper will be able to update this file once it
-            # is created but will not be able to delete it on shutdown.  If $2 is defined then
+            # If LOCKPROP and $RUN_AS_USER are defined then the new user will mo                                                                                                                     st likely not be
+            # able to create the lock file.  The Wrapper will be able to update                                                                                                                      this file once it
+            # is created but will not be able to delete it on shutdown.  If $2 i                                                                                                                     s defined then
             # the lock file should be created for the current command
             if [ "X$LOCKPROP" != "X" ]
             then
                 if [ "X$1" != "X" ]
                 then
                     # Resolve the primary group
-                    RUN_AS_GROUP=`groups $RUN_AS_USER | awk '{print $3}' | tail -1`
+                    RUN_AS_GROUP=`groups $RUN_AS_USER | awk '{print $3}' | tail                                                                                                                      -1`
                     if [ "X$RUN_AS_GROUP" = "X" ]
                     then
                         RUN_AS_GROUP=$RUN_AS_USER
@@ -290,17 +293,17 @@ checkUser() {
                 fi
             fi
 
-            # Still want to change users, recurse.  This means that the user will only be
+            # Still want to change users, recurse.  This means that the user wil                                                                                                                     l only be
             #  prompted for a password once. Variables shifted by 1
             su - $RUN_AS_USER -c "\"$REALPATH\" $2"
 
-            # Now that we are the original user again, we may need to clean up the lock file.
+            # Now that we are the original user again, we may need to clean up t                                                                                                                     he lock file.
             if [ "X$LOCKPROP" != "X" ]
             then
                 getpid
                 if [ "X$pid" = "X" ]
                 then
-                    # Wrapper is not running so make sure the lock file is deleted.
+                    # Wrapper is not running so make sure the lock file is delet                                                                                                                     ed.
                     if [ -f "$LOCKFILE" ]
                     then
                         rm "$LOCKFILE"
@@ -321,7 +324,7 @@ checkUser() {
         echo "****************************************"
         if [ ! "`$IDEXE -u -n`" = "$RUN_AS_USER" ]
         then
-            echo "If you insist running as root, then set the environment variable RUN_AS_USER=root before running this script."
+            echo "If you insist running as root, then set the environment variab                                                                                                                     le RUN_AS_USER=root before running this script."
             exit 1
         fi
     fi
@@ -335,20 +338,20 @@ getpid() {
             pid=`cat "$PIDFILE"`
             if [ "X$pid" != "X" ]
             then
-                # It is possible that 'a' process with the pid exists but that it is not the
-                #  correct process.  This can happen in a number of cases, but the most
+                # It is possible that 'a' process with the pid exists but that i                                                                                                                     t is not the
+                #  correct process.  This can happen in a number of cases, but t                                                                                                                     he most
                 #  common is during system startup after an unclean shutdown.
-                # The ps statement below looks for the specific wrapper command running as
-                #  the pid.  If it is not found then the pid file is considered to be stale.
+                # The ps statement below looks for the specific wrapper command                                                                                                                      running as
+                #  the pid.  If it is not found then the pid file is considered                                                                                                                      to be stale.
                 case "$DIST_OS" in
                     'macosx')
-                        pidtest=`$PSEXE -ww -p $pid -o command | grep "wrapper.pidfile" | tail -1`
+                        pidtest=`$PSEXE -ww -p $pid -o command | grep "wrapper.p                                                                                                                     idfile" | tail -1`
                         ;;
                     'solaris')
-                        pidtest=`$PSEXE ww $pid | grep "wrapper.pidfile" | tail -1`
+                        pidtest=`$PSEXE ww $pid | grep "wrapper.pidfile" | tail                                                                                                                      -1`
                         ;;
                     *)
-                        pidtest=`$PSEXE -p $pid -o args | grep "wrapper.pidfile" | tail -1`
+                        pidtest=`$PSEXE -p $pid -o args | grep "wrapper.pidfile"                                                                                                                      | tail -1`
                         ;;
                 esac
                 if [ "X$pidtest" = "X" ]
@@ -369,9 +372,9 @@ getpid() {
 testpid() {
     if [ "$DIST_OS" = "solaris" ]
     then
-        pid=`$PSEXE ww $pid | grep $pid | grep -v grep | awk '{print $1}' | tail -1`
+        pid=`$PSEXE ww $pid | grep $pid | grep -v grep | awk '{print $1}' | tail                                                                                                                      -1`
     else
-        pid=`$PSEXE -p $pid | grep $pid | grep -v grep | awk '{print $1}' | tail -1`
+        pid=`$PSEXE -p $pid | grep $pid | grep -v grep | awk '{print $1}' | tail                                                                                                                      -1`
     fi
     if [ "X$pid" = "X" ]
     then
@@ -387,7 +390,7 @@ console() {
     if [ "X$pid" = "X" ]
     then
         # The string passed to eval must handles spaces in paths correctly.
-        COMMAND_LINE="$CMDNICE \"$WRAPPER_CMD\" \"$WRAPPER_CONF\" wrapper.syslog.ident=$APP_NAME wrapper.pidfile=\"$PIDFILE\" $ANCHORPROP $LOCKPROP"
+        COMMAND_LINE="$CMDNICE \"$WRAPPER_CMD\" \"$WRAPPER_CONF\" wrapper.syslog                                                                                                                     .ident=$APP_NAME wrapper.pidfile=\"$PIDFILE\" $ANCHORPROP $LOCKPROP"
         eval $COMMAND_LINE
     else
         echo "$APP_LONG_NAME is already running."
@@ -401,7 +404,7 @@ start() {
     if [ "X$pid" = "X" ]
     then
         # The string passed to eval must handles spaces in paths correctly.
-        COMMAND_LINE="$CMDNICE \"$WRAPPER_CMD\" \"$WRAPPER_CONF\" wrapper.syslog.ident=$APP_NAME wrapper.pidfile=\"$PIDFILE\" wrapper.daemonize=TRUE $ANCHORPROP $IGNOREPROP $LOCKPROP"
+        COMMAND_LINE="$CMDNICE \"$WRAPPER_CMD\" \"$WRAPPER_CONF\" wrapper.syslog                                                                                                                     .ident=$APP_NAME wrapper.pidfile=\"$PIDFILE\" wrapper.daemonize=TRUE $ANCHORPROP                                                                                                                      $IGNOREPROP $LOCKPROP"
         eval $COMMAND_LINE
     else
         echo "$APP_LONG_NAME is already running."
@@ -548,5 +551,3 @@ case "$1" in
         exit 1
         ;;
 esac
-
-exit 0
