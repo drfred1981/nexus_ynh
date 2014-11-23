@@ -39,11 +39,11 @@ wget -P /tmp "http://download.sonatype.com/nexus/oss/nexus-latest-bundle.zip"
 sudo adduser --home /opt/nexus --disabled-login --disabled-password  --system nexus
 sudo mkdir /opt/nexus
 sudo unzip -d /opt/nexus /tmp/nexus-latest-bundle.zip
-#sudo cp ../conf/nexus /opt/nexus/nexus-$version/bin/nexus
+sudo cp ../conf/nexus /opt/nexus/nexus-$version/bin/nexus
 
-add="\nRUN_AS_USER=nexus\nNEXUS_HOME=\"/opt/nexus/nexus-$version/\"\n"
+#add="\nRUN_AS_USER=nexus\nNEXUS_HOME=\"/opt/nexus/nexus-$version/\"\n"
 
-sudo sed -i "s@NEXUS_HOME=\"..\"@$add@g" /opt/nexus/nexus-$version/bin/nexus
+#sudo sed -i "s@NEXUS_HOME=\"..\"@$add@g" /opt/nexus/nexus-$version/bin/nexus
 
 sudo ln -s /opt/nexus/nexus-$version/bin/nexus /etc/init.d/nexus
 sudo chown -hR nexus: /opt/nexus/
