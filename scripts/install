@@ -76,7 +76,7 @@ sudo service nexus start
 
 data_path=/home/yunohost.app/nexus
 sudo mkdir -p $data_path
-sudo chown root@nexus -R $data_path
+sudo chown root:nexus -R $data_path
 sudo chmod 775 $data_path
 
 # Monitor service
