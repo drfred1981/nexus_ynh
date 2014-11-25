@@ -36,18 +36,17 @@ sudo apt-get install -y openjdk-7-jre openjdk-7-jdk tomcat7
 # Copy files to the right place
 
 wget -P /tmp "http://download.sonatype.com/nexus/oss/nexus-latest-bundle.zip"
-sudo adduser --home /opt/nexus --disabled-login --disabled-password  --system nexus
+sudo addgroup nexus
 sudo mkdir /opt/nexus
 sudo unzip -d /opt/nexus /tmp/nexus-latest-bundle.zip
 #sudo cp ../conf/nexus /opt/nexus/nexus-$version/bin/nexus
 
 #add="\nRUN_AS_USER=nexus\nNEXUS_HOME=\"/opt/nexus/nexus-$version/\"\n"
 
-sudo sed -i "s@#RUN_AS_USER=@RUN_AS_USER=nexus@g" /opt/nexus/nexus-$version/bin/nexus
+sudo sed -i "s@#RUN_AS_USER=@RUN_AS_USER=root@g" /opt/nexus/nexus-$version/bin/nexus
 
 sudo ln -s /opt/nexus/nexus-$version/bin/nexus /etc/init.d/nexus
 sudo mkdir /opt/nexus/sonatype-work
-sudo chown -hR nexus: /opt/nexus/sonatype-work
 sudo chmod +x /opt/nexus/nexus-$version/bin/nexus
 
 sudo update-rc.d nexus defaults
@@ -73,15 +72,11 @@ sudo sed -i "s@YNH_DOMAIN@$domain@g" /opt/nexus/sonatype-work/nexus/conf/nexus.x
 sudo sed -i "s@YNH_EMAIL@$YNH_MAIL@g" /opt/nexus/sonatype-work/nexus/conf/nexus.xml
 
 
-
-sudo chown -hR nexus: /opt/nexus/sonatype-work
-
-
 sudo service nexus start
 
 data_path=/home/yunohost.app/nexus
 sudo mkdir -p $data_path
-sudo chown -hR nexus: $data_path
+sudo chown root@nexus -R $data_path
 sudo chmod 775 $data_path
 
 # Monitor service
