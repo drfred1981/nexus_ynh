@@ -57,10 +57,9 @@ sudo sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/nexus.conf
 sudo service nexus start
-sleep 160
+sleep 30
 wget http://localhost:8081/nexus
-sleep 160
-wget http://localhost:8081/nexus
+sleep 30
 sudo service nexus stop
 
 sudo cp ../conf/security-configuration.xml /opt/nexus/sonatype-work/nexus/conf/
