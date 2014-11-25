@@ -61,16 +61,16 @@ wget http://localhost:8081/nexus
 sleep 120
 sudo service nexus stop
 
-sudo cp ../conf/security-configuration.xml /opt/nexus/sonatype-work/nexus/conf/
-sudo cp ../conf/security.xml /opt/nexus/sonatype-work/nexus/conf/
-sudo cp ../conf/capabilities.xml /opt/nexus/sonatype-work/nexus/conf/
-sudo cp ../conf/nexus.xml /opt/nexus/sonatype-work/nexus/conf/
+#sudo cp ../conf/security-configuration.xml /opt/nexus/sonatype-work/nexus/conf/
+#sudo cp ../conf/security.xml /opt/nexus/sonatype-work/nexus/conf/
+#sudo cp ../conf/capabilities.xml /opt/nexus/sonatype-work/nexus/conf/
+#sudo cp ../conf/nexus.xml /opt/nexus/sonatype-work/nexus/conf/
 
-sudo sed -i "s@YNH_USER@$user@g" /opt/nexus/sonatype-work/nexus/conf/nexus.xml
-sudo sed -i "s@YNH_USER@$user@g" /opt/nexus/sonatype-work/nexus/conf/security.xml
-sudo sed -i "s@YNH_DOMAIN@$domain@g" /opt/nexus/sonatype-work/nexus/conf/nexus.xml
-sudo sed -i "s@YNH_EMAIL@$user\@$domaincat @g" /opt/nexus/sonatype-work/nexus/conf/nexus.xml
-sudo sed -i "s@YNH_EMAIL@$user\@$domain@g" /opt/nexus/sonatype-work/nexus/conf/security.xml
+#sudo sed -i "s@YNH_USER@$user@g" /opt/nexus/sonatype-work/nexus/conf/nexus.xml
+#sudo sed -i "s@YNH_USER@$user@g" /opt/nexus/sonatype-work/nexus/conf/security.xml
+#sudo sed -i "s@YNH_DOMAIN@$domain@g" /opt/nexus/sonatype-work/nexus/conf/nexus.xml
+#sudo sed -i "s@YNH_EMAIL@$user\@$domaincat @g" /opt/nexus/sonatype-work/nexus/conf/nexus.xml
+#sudo sed -i "s@YNH_EMAIL@$user\@$domain@g" /opt/nexus/sonatype-work/nexus/conf/security.xml
 
 
 sudo service nexus start
