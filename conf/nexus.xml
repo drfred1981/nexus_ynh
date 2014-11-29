@@ -8,7 +8,7 @@
   </globalConnectionSettings>
   <remoteProxySettings />
   <restApi>
-    <baseUrl>https://YNH_DOMAIN/nexus</baseUrl>
+    <baseUrl>https://YNH_DOMAIN/nexus/</baseUrl>
     <forceBaseUrl>true</forceBaseUrl>
     <uiTimeout>60000</uiTimeout>
   </restApi>
