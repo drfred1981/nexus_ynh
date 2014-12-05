@@ -55,6 +55,8 @@ sudo sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 sudo sed -i "s@PORTTOCHANGE@$port@g" ../conf/nginx.conf
 
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/nexus.conf
+sudo service nexus start
+sudo service nexus stop
 sudo sed -i "s@application-port=8081@application-port=$port@g" /opt/nexus/sonatype-work/nexus/conf/nexus.properties
 sudo service nexus start
 sleep 60
