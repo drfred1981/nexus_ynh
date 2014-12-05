@@ -56,13 +56,8 @@ sudo sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 sudo sed -i "s@PORTTOCHANGE@$port@g" ../conf/nginx.conf
 
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/nexus.conf
-sudo service nexus start
 
-wget http://localhost:8081/nexus
-sleep 60
-
-sudo service nexus stop
-sudo sed -i "s@application-port=8081@application-port=$port@g" /opt/nexus/sonatype-work/nexus/conf/nexus.properties
+sudo sed -i "s@application-port=8081@application-port=$port@g" /opt/nexus/nexus-$version/conf/nexus.properties
 sudo service nexus start
 wget http://localhost:$port/nexus
 sleep 120
@@ -73,7 +68,6 @@ sudo cp ../conf/security.xml /opt/nexus/sonatype-work/nexus/conf/
 sudo cp ../conf/capabilities.xml /opt/nexus/sonatype-work/nexus/conf/
 sudo cp ../conf/nexus.xml /opt/nexus/sonatype-work/nexus/conf/
 
-sudo sed -i "s@application-port=8081@application-port=$port@g" /opt/nexus/sonatype-work/nexus/conf/nexus.properties
 
 sudo sed -i "s@YNH_USER@$user@g" /opt/nexus/sonatype-work/nexus/conf/nexus.xml
 sudo sed -i "s@YNH_USER@$user@g" /opt/nexus/sonatype-work/nexus/conf/security.xml
