@@ -39,32 +39,17 @@ sudo apt-get install -y openjdk-7-jre openjdk-7-jdk tomcat7
 wget -P /tmp "http://download.sonatype.com/nexus/oss/nexus-$version-bundle.zip"
 sudo mkdir /opt/nexus
 sudo unzip -d /opt/nexus /tmp/nexus-$version-bundle.zip
-#sudo cp ../conf/nexus /opt/nexus/nexus-$version/bin/nexus
+sudo cp ../conf/nexus /opt/nexus/nexus-$version/bin/nexus
 
 #add="\nRUN_AS_USER=nexus\nNEXUS_HOME=\"/opt/nexus/nexus-$version/\"\n"
 
-sudo sed -i "s@#RUN_AS_USER=@RUN_AS_USER=root@g" /opt/nexus/nexus-$version/bin/nexus
+#sudo sed -i "s@#RUN_AS_USER=@RUN_AS_USER=root@g" /opt/nexus/nexus-$version/bin/nexus
 
 sudo ln -s /opt/nexus/nexus-$version/bin/nexus /etc/init.d/nexus
 sudo mkdir /opt/nexus/sonatype-work
 sudo chmod +x /opt/nexus/nexus-$version/bin/nexus
 
-HEADER='#! /bin/sh
-##     Script de lancement des serveur     ##
-### BEGIN INIT INFO
-# Provides: nexus
-# Required-Start:   $all
-# Required-Stop: 
-# Default-Start: 2 3 4 5
-# Default-Stop: 0 1 6
-# Short-Description: script de controle
-# Description: script de controle nexus
-#             
-### END INIT INFO
-'
-sudo sed -i "s@#! /bin/sh@$HEADER@g" /opt/nexus/nexus-$version/bin/nexus
 
-sudo sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 sudo update-rc.d nexus defaults
 sudo sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 sudo sed -i "s@PORTTOCHANGE@$port@g" ../conf/nginx.conf
