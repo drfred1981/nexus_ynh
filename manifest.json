@@ -34,7 +34,15 @@
                     "en": "Choose the nexus administrator (must be an existing YunoHost user)"
                 },
                 "example": "homer"
-            }
+            },
+            {
+"name": "port",
+"ask": {
+"en": "Change the defaukt port"
+},
+"example": "8081",
+ "default": "8081"
+}
         ]
     }
 }
