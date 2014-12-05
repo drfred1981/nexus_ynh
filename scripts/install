@@ -47,6 +47,7 @@ sudo cp ../conf/nexus /opt/nexus/nexus-$version/bin/nexus
 
 sudo ln -s /opt/nexus/nexus-$version/bin/nexus /etc/init.d/nexus
 sudo mkdir /opt/nexus/sonatype-work
+sudo chmod 775 -R /opt/nexus/
 sudo chmod +x /opt/nexus/nexus-$version/bin/nexus
 
 
