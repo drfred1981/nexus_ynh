@@ -49,16 +49,33 @@ sudo ln -s /opt/nexus/nexus-$version/bin/nexus /etc/init.d/nexus
 sudo mkdir /opt/nexus/sonatype-work
 sudo chmod +x /opt/nexus/nexus-$version/bin/nexus
 
+HEADER='#! /bin/sh
+##     Script de lancement des serveur     ##
+### BEGIN INIT INFO
+# Provides: nexus
+# Required-Start:   $all
+# Required-Stop: 
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: script de controle
+# Description: script de controle nexus
+#             
+### END INIT INFO
+'
+sudo sed -i "s@#! /bin/sh@$HEADER@g" /opt/nexus/nexus-$version/bin/nexus
+
+sudo sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 sudo update-rc.d nexus defaults
 sudo sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
+sudo sed -i "s@PORTTOCHANGE@$port@g" ../conf/nginx.conf
 
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/nexus.conf
 sudo sed -i "s@application-port=8081@application-port=$port@g" /opt/nexus/sonatype-work/nexus/conf/nexus.properties
 sudo service nexus start
 sleep 60
-wget http://localhost:8081/nexus
+wget http://localhost:$port/nexus
 sleep 120
-wget http://localhost:8081/nexus
+wget http://localhost:$port/nexus
 sudo service nexus stop
 
 sudo cp ../conf/security-configuration.xml /opt/nexus/sonatype-work/nexus/conf/
